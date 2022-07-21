@@ -536,7 +536,7 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 	result = device->CreateDescriptorHeap(&srvHeapDesc, IID_PPV_ARGS(&srvHeap));
 	assert(SUCCEEDED(result));
 
-
+	
 
 
 
@@ -808,6 +808,7 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 	ComPtr < ID3D12Resource> constBuffTransform1;
 	ConstBufferDataTransform* constMapTransform1 = nullptr;
 
+	
 
 	////スケーリング倍率
 	//XMFLOAT3 scale = { 1.0f,1.0f,1.0f };
@@ -966,6 +967,11 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 
 	// 値を書き込むと自動的に転送される
 	constMapMaterial->color = XMFLOAT4(1, 1, 1, 1);              // RGBA
+
+	float RED = 1;
+	float GREEN = 0;
+	float BLUE = 0;
+	constMapMaterial->color = XMFLOAT4(RED, GREEN, BLUE, 0.5f);
 
 	// ルートパラメータの設定
 	D3D12_ROOT_PARAMETER rootParams[3] = {};
@@ -1265,6 +1271,19 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 			else if (key[DIK_DOWN]) { object3ds[0].position.y -= 1.0f; }
 			if (key[DIK_RIGHT]) { object3ds[0].position.x += 1.0f; }
 			else if (key[DIK_LEFT]) { object3ds[0].position.x -= 1.0f; }
+		}
+
+		if (GREEN <= 1.0f) {
+			RED -= 0.01f;
+			GREEN += 0.01f;
+			BLUE += 0.01f;
+		}
+		constMapMaterial->color = XMFLOAT4(RED, GREEN, BLUE, 0.5f);
+
+		if (key[DIK_R]) {
+			RED = 1.0f;
+			GREEN = 0.0f;
+			BLUE = 0.0f;
 		}
 
 		////回転
