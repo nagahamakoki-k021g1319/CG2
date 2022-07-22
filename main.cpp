@@ -106,6 +106,8 @@ void DrawObject3d(Object3d* object, ID3D12GraphicsCommandList* commandList, D3D1
 
 
 
+
+
 #pragma region おまじない
 // @brief コンソール画面にフォーマット付き文字列の表示
 // @param format フォーマット(%dとか%fとかの)
@@ -1257,8 +1259,17 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 			eye.x = -100 * sinf(angle);
 			eye.z = -100 * cosf(angle);
 			matView = XMMatrixLookAtLH(XMLoadFloat3(&eye), XMLoadFloat3(&target), XMLoadFloat3(&up));
-
 		}
+		if (key[DIK_W] || key[DIK_S]) {
+			if (key[DIK_W]) { angle += XMConvertToRadians(1.0f); }
+			else if (DIK_S) { angle -= XMConvertToRadians(1.0f); }
+
+			//angleラジアンだけy軸まわりに回転
+			eye.y = -100 * sinf(angle);
+			eye.z = -100 * cosf(angle);
+			matView = XMMatrixLookAtLH(XMLoadFloat3(&eye), XMLoadFloat3(&target), XMLoadFloat3(&up));
+		}
+
 
 		for (size_t i = 0; i < _countof(object3ds); i++)
 		{
@@ -1325,11 +1336,6 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 		//matWorld1 = matScale1 * matRot1 * matTrans1;
 		////ワールド、ビュー、射影行列を合成してシェーダーに転送
 		//constMapTransform1->mat = matWorld1 * matView * matProjection;
-
-
-
-
-
 
 
 		////トリガー処理
