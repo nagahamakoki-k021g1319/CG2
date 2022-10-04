@@ -135,6 +135,7 @@ void DrawObject3d(Object3d* object, ID3D12GraphicsCommandList* commandList, D3D1
 
 
 
+
 #pragma region おまじない
 // @brief コンソール画面にフォーマット付き文字列の表示
 // @param format フォーマット(%dとか%fとかの)
